@@ -7,11 +7,6 @@
     </listeners>
     <parameter name="browser" value="chrome"/>
     <test name="Test Suite 1">
-        <groups>
-            <run>
-                <include name="group_1"/>
-            </run>
-        </groups>
         <classes>
             <class name="com.advancedSelenium.AmazonPractice.Test_1"/>
         </classes>

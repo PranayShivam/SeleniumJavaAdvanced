@@ -13,6 +13,8 @@ import org.testng.annotations.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class BaseTest extends FrameWorkComponents {
 
@@ -27,6 +29,15 @@ public abstract class BaseTest extends FrameWorkComponents {
     public void setExtentReports() {
         if (extentReports == null) {
             extentReports = createInstance();
+        }
+    }
+
+    @BeforeSuite
+    public void printEnvironmentDetails() {
+        Map<String , String> envData = System.getenv();
+        Set<Map.Entry<String, String>> entrySet = envData.entrySet();
+        for (Map.Entry<String, String> map : entrySet) {
+            System.out.println(map.getKey() + " : " + map.getValue());
         }
     }
 

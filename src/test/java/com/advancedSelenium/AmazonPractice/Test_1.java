@@ -44,7 +44,7 @@ public class Test_1 extends BaseTest{
     }
 
 
-    @Test(/*invocationCount = 10, threadPoolSize = 10,*/ retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class, groups = {"group_1"})
+    @Test(invocationCount = 10, threadPoolSize = 10, retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class)
     public void test_1() throws IOException {
 
         Reporter.getCurrentTestResult().getTestContext().setAttribute("driver", driver);
@@ -81,7 +81,7 @@ public class Test_1 extends BaseTest{
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileCopyUtils.copy(src, new File(getScreenShotLocation() + "\\ScreenShot" + dateFormat.format(date) + ".png"));
+        FileCopyUtils.copy(src, new File(getScreenShotLocation() + "ScreenShot" + dateFormat.format(date) + ".png"));
 
         listOfItemsElement.get(productNo).click();
         String validationString_1 = listOfItems.get(productNo);
