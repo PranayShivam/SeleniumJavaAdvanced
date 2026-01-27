@@ -14,6 +14,7 @@ import org.testng.annotations.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public abstract class BaseTest extends FrameWorkComponents {
@@ -22,8 +23,12 @@ public abstract class BaseTest extends FrameWorkComponents {
     public static ExtentReports extentReports;
     public static ExtentTest extentTest;
     static Response Response;
-    protected WebDriver driver;
-    protected Logger log;
+    protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+//    protected Logger log;
+
+    public WebDriver getDriver() {
+        return driver.get();
+    }
 
     @BeforeSuite(alwaysRun = true)
     public void setExtentReports() {
@@ -74,17 +79,17 @@ public abstract class BaseTest extends FrameWorkComponents {
     @BeforeMethod
     @Parameters("browser")
     public void setUpBrowser(@Optional("chrome") String browser, ITestContext context) {
-        String testName = context.getCurrentXmlTest().getName();
-        log = LogManager.getLogger(testName);
-        BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
-        driver = factory.createDriver();
-        driver.manage().window().maximize();
+//        String testName = context.getCurrentXmlTest().getName();
+//        log = LogManager.getLogger(testName);
+        BrowserDriverFactory factory = new BrowserDriverFactory(browser/*, log*/);
+        driver.set(factory.createDriver());
+//        getDriver().manage().window().maximize();
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();     // closes ALL windows of this driver
+        if (getDriver() != null) {
+           getDriver().quit();     // closes ALL windows of this driver
         }
     }
 
