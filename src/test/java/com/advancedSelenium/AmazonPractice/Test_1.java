@@ -43,25 +43,25 @@ public class Test_1 extends BaseTest {
         extentTest.info("Starting Test 1");
     }
 
-    @Test(invocationCount = 10, threadPoolSize = 10/*, retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class*/)
+    @Test(invocationCount = 20, threadPoolSize = 20/*, retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class*/)
     public void test_1() throws IOException {
+        WebDriver driver = getDriver();
+//        Reporter.getCurrentTestResult().getTestContext().setAttribute("driver", driver);
+        driver.get("https://www.amazon.com/");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50), Duration.ofSeconds(2));
+        Actions cursorActions = new Actions(driver);
 
-//        Reporter.getCurrentTestResult().getTestContext().setAttribute("getDriver()", getDriver());
-        getDriver().get("https://www.amazon.com/");
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(50), Duration.ofSeconds(2));
-        Actions cursorActions = new Actions(getDriver());
-
-        if (!getDriver().findElements(AmazonXpath.continueShoppingButton).isEmpty()) {
-            getDriver().findElement(AmazonXpath.continueShoppingButton).click();
+        if (!driver.findElements(AmazonXpath.continueShoppingButton).isEmpty()) {
+            driver.findElement(AmazonXpath.continueShoppingButton).click();
         }
 
         wait.until(ExpectedConditions.titleContains("Amazon"));
 
-        String title = getDriver().getTitle();
+        String title = driver.getTitle();
         Assert.assertTrue(Objects.requireNonNull(title).toLowerCase().contains("amazon.com"),
                 "Title Validation Failed, Title:  " + title);
 
-        WebElement searchBar = getDriver().findElement(AmazonXpath.searchBox);
+        WebElement searchBar = driver.findElement(AmazonXpath.searchBox);
         cursorActions.moveToElement(searchBar).click().sendKeys(searchField);
         performCursorAction(cursorActions);
 
@@ -79,12 +79,12 @@ public class Test_1 extends BaseTest {
 
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");
-        File src = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
+        File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileCopyUtils.copy(src, new File(getScreenShotLocation() + "ScreenShot" + dateFormat.format(date) + ".png"));
 
         listOfItemsElement.get(productNo).click();
         String validationString_1 = listOfItems.get(productNo);
-        String validationString_2 = getDriver().findElement(AmazonXpath.productTitle).getText();
+        String validationString_2 = driver.findElement(AmazonXpath.productTitle).getText();
         Assert.assertEquals(validationString_1, validationString_2, "Product Description mis-match");
         extentTest.log(Status.PASS, "Product Description Matched: \n" +
                 "Validation String 1: " + validationString_1 + "\n" +
