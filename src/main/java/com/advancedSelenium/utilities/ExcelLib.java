@@ -2,6 +2,8 @@ package com.advancedSelenium.utilities;
 
 import com.advancedSelenium.components.FrameworkConstants;
 import lombok.Getter;
+import lombok.Setter;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -15,6 +17,7 @@ import java.util.Set;
 
 public class ExcelLib {
 
+    @Getter @Setter
     private String fileName = "TestData.xlsx";
 
     private XSSFSheet Sheet;
@@ -30,10 +33,16 @@ public class ExcelLib {
     }
 
     @Getter
+    private Set<String> cellValues = new LinkedHashSet<>();
+
+    @Getter
     private final Set<String> sheetNames = new LinkedHashSet<>();
 
     @Getter
-    private static XSSFWorkbook workbook;
+    private XSSFWorkbook workbook;
+
+    @Getter
+    private String specificSheetName;
 
     private void printAllSheetNames() {
 
@@ -63,12 +72,21 @@ public class ExcelLib {
     }
 
     public ExcelLib(String sheetName, String testCaseName) {
-        this();
-        getSpecificSheet(sheetName);
-        Iterator<Row> rows = Sheet.iterator();
-        while (rows.hasNext()) {
+        this.specificSheetName = sheetName;
+        getCellValues(testCaseName);
+    }
 
+    private void getCellValues(String testCaseName) {
+        getSpecificSheet(specificSheetName);
+        for (Row cells : Sheet) {
+            Iterator<Cell> cell = cells.cellIterator();
+            if (cell.hasNext() && cell.next().getStringCellValue().equalsIgnoreCase(testCaseName)) {
+                cellValues.add(cell.next().getStringCellValue());
+            }
         }
+    }
+
+    public static void printAllCellValues() {
 
     }
 }
