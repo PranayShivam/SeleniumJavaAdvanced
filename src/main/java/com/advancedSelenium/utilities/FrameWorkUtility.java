@@ -1,14 +1,13 @@
-package com.advancedSelenium.components;
+package com.advancedSelenium.utilities;
 
 import org.testng.Assert;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class FrameWorkComponents {
+public class FrameWorkUtility {
 
     private static final String REPORT_FOLDER_LOCATION = System.getProperty("user.dir") + File.separator + "Reports" + File.separator;
     private static final String AppPROPERTIES_FILE_LOCATION = System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "application.properties";

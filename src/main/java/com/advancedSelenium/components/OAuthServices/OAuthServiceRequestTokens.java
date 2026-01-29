@@ -2,7 +2,7 @@ package com.advancedSelenium.components.OAuthServices;
 
 import com.advancedSelenium.Enums.GrantType;
 import com.advancedSelenium.Enums.Scope;
-import com.advancedSelenium.components.FrameWorkComponents;
+import com.advancedSelenium.utilities.FrameWorkUtility;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -17,8 +17,8 @@ public class OAuthServiceRequestTokens {
 
     private String accessToken;
     private String refreshToken;
-    private final String client_id = FrameWorkComponents.getValueFromConfigProperty("client_id");
-    private final String client_Secret = FrameWorkComponents.getValueFromConfigProperty("client_secret");
+    private final String client_id = FrameWorkUtility.getValueFromConfigProperty("client_id");
+    private final String client_Secret = FrameWorkUtility.getValueFromConfigProperty("client_secret");
     private final String url = "https://rahulshettyacademy.com/";
     private final String baseUri = "/oauthapi/oauth2/resourceOwner/token";
 
