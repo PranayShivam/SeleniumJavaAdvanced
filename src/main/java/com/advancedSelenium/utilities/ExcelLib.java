@@ -1,8 +1,7 @@
 package com.advancedSelenium.utilities;
 
+import com.advancedSelenium.components.ExcelLibVariables;
 import com.advancedSelenium.components.FrameworkConstants;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -12,15 +11,12 @@ import org.testng.Assert;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
-public class ExcelLib {
+public class ExcelLib extends ExcelLibVariables {
 
-    @Getter @Setter
-    private String fileName = "TestData.xlsx";
-
-    private XSSFSheet Sheet;
+    public static void setWorkBookFile(String fileName) {
+        ExcelLibVariables.fileName = fileName;
+    }
 
     /**
      * Getter Method for Sheet
@@ -32,19 +28,7 @@ public class ExcelLib {
         return Sheet;
     }
 
-    @Getter
-    private Set<String> cellValues = new LinkedHashSet<>();
-
-    @Getter
-    private final Set<String> sheetNames = new LinkedHashSet<>();
-
-    @Getter
-    private XSSFWorkbook workbook;
-
-    @Getter
-    private String specificSheetName;
-
-    private void printAllSheetNames() {
+    private void initializeWorkBook() {
 
         String testDataLocation = FrameworkConstants.EXCEL_FILE_LOCATION + fileName;
         try (FileInputStream fileInputStream = new FileInputStream(testDataLocation);
@@ -66,27 +50,32 @@ public class ExcelLib {
     }
 
 
-    public ExcelLib(String... fileName) {
-        this.fileName = (fileName.length<=1) ? fileName[0] : this.fileName;
-        printAllSheetNames();
-    }
+    public ExcelLib() {}
 
     public ExcelLib(String sheetName, String testCaseName) {
+        initializeWorkBook();
         this.specificSheetName = sheetName;
         getCellValues(testCaseName);
     }
 
     private void getCellValues(String testCaseName) {
         getSpecificSheet(specificSheetName);
-        for (Row cells : Sheet) {
-            Iterator<Cell> cell = cells.cellIterator();
-            if (cell.hasNext() && cell.next().getStringCellValue().equalsIgnoreCase(testCaseName)) {
-                cellValues.add(cell.next().getStringCellValue());
+        System.out.println(Sheet.getSheetName());
+        Iterator<Row> rows = Sheet.iterator();
+        while (rows.hasNext()) {
+            Iterator<Cell> cell = rows.next().cellIterator();
+            while (cell.hasNext()) {
+                Cell cellValue = cell.next();
+                switch (cellValue.getCellType()){
+                    case STRING -> cellValues.add(cellValue.getStringCellValue());
+                    case NUMERIC -> cellValues.add(String.valueOf(cellValue.getNumericCellValue()));
+                    case BOOLEAN -> cellValues.add(String.valueOf(cellValue.getBooleanCellValue()));
+                    case BLANK -> cellValues.add("");
+                    case FORMULA -> cellValues.add(String.valueOf(cellValue.getCellFormula()));
+                }
             }
         }
     }
 
-    public static void printAllCellValues() {
 
-    }
 }

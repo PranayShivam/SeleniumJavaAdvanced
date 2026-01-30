@@ -9,10 +9,10 @@ public class DataDrivenTestCase {
     @Test
     public void DataDrivenTest() {
 
-        ExcelLib lib = new ExcelLib(fileName);
+        ExcelLib.setWorkBookFile("Project-Management-Sample-Data.xlsx");
+        ExcelLib lib = new ExcelLib("Additional Sheet",this.getClass().getSimpleName());
         System.out.println(lib.getSheetNames());
-
-        System.out.println(lib.getSheet("additional Sheet").getDefaultRowHeight());
+        System.out.println(lib.getCellValues());
     }
 
 }
