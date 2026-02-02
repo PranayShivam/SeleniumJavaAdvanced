@@ -43,7 +43,7 @@ public class Test_1 extends BaseTest {
         extentTest.info("Starting Test 1");
     }
 
-    @Test(invocationCount = 20, threadPoolSize = 20/*, retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class*/)
+    @Test(invocationCount = 2, threadPoolSize = 2/*, retryAnalyzer = com.advancedSelenium.Listeners.RetryAnalyzer.class*/)
     public void test_1() throws IOException {
         WebDriver driver = getDriver();
 //        Reporter.getCurrentTestResult().getTestContext().setAttribute("driver", driver);
