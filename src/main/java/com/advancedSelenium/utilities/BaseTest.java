@@ -1,12 +1,9 @@
 package com.advancedSelenium.utilities;
 
 import com.advancedSelenium.components.BrowserDriverFactory;
-import com.advancedSelenium.components.FrameWorkComponents;
 import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
@@ -14,10 +11,9 @@ import org.testng.annotations.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
-public abstract class BaseTest extends FrameWorkComponents {
+public abstract class BaseTest extends FrameWorkUtility {
 
     public static ExtentSparkReporter extentSparkReporter;
     public static ExtentReports extentReports;
