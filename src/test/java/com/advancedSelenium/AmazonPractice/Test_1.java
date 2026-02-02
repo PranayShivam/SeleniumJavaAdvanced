@@ -4,14 +4,13 @@ package com.advancedSelenium.AmazonPractice;
 import com.advancedSelenium.utilities.BaseTest;
 import com.advancedSelenium.xpathStore.AmazonXpath;
 import com.aventstack.extentreports.Status;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.util.FileCopyUtils;
 import org.testng.Assert;
-import org.testng.Reporter;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -80,7 +79,7 @@ public class Test_1 extends BaseTest {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yy_HH_mm");
         File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileCopyUtils.copy(src, new File(getScreenShotLocation() + "ScreenShot" + dateFormat.format(date) + ".png"));
+        FileUtils.copyFile(src, new File(getScreenShotLocation() + "ScreenShot" + dateFormat.format(date) + ".png"));
 
         listOfItemsElement.get(productNo).click();
         String validationString_1 = listOfItems.get(productNo);

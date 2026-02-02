@@ -1,10 +1,10 @@
 package com.advancedSelenium.Listeners;
 
 import com.advancedSelenium.utilities.FrameWorkUtility;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.springframework.util.FileCopyUtils;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -35,7 +35,7 @@ public class TestListeners implements ITestListener {
         SimpleDateFormat sdf = new SimpleDateFormat("dd_MM_yy_HH_mm");
         String dest = FrameWorkUtility.getScreenShotLocation() + "ListenerSS_" + sdf.format(new Date()) + ".html";
         try {
-            FileCopyUtils.copy(src, new File(dest));
+            FileUtils.copyFile(src, new File(dest));
         } catch (IOException e) {
             System.out.println("File Error: " + e.getMessage());
         }
